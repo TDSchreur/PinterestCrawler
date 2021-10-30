@@ -1,11 +1,11 @@
 ﻿{
-  "profiles": {
-    "Scrape": {
-      "commandName": "Project",
-      "dotnetRunMessages": "true",
-      "environmentVariables": {
-        "DOTNET_ENVIRONMENT": "Development"
-      }
+    "profiles": {
+        "Scrape": {
+            "commandName": "Project",
+            "dotnetRunMessages": "true",
+            "environmentVariables": {
+                "DOTNET_ENVIRONMENT": "Development"
+            }
+        }
     }
-  }
 }

@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Scrape.Models;
 
 namespace Scrape
 {
     public interface IPinterestAgent
     {
-        Task<string> GetData(string[] keywords);
+        Task<ResponseModel> GetData(string[] keywords);
     }
 }

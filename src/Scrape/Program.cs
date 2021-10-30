@@ -46,32 +46,30 @@ namespace Scrape
         private static IHostBuilder CreateHostBuilder(string[] args) =>
             new HostBuilder()
                .ConfigureAppConfiguration((context, builder) =>
-               {
-                   IHostEnvironment env = context.HostingEnvironment;
+                {
+                    builder.AddJsonFile("appsettings.json", false, false)
+                           .AddCommandLine(args)
+                           .AddUserSecrets<Worker>()
+                           .AddEnvironmentVariables();
 
-                   builder.AddJsonFile("appsettings.json", false, false)
-                          .AddCommandLine(args)
-                          .AddUserSecrets<Worker>()
-                          .AddEnvironmentVariables();
-
-                   context.Configuration = builder.Build();
-               })
+                    context.Configuration = builder.Build();
+                })
                .ConfigureLogging((_, builder) =>
-               {
-                   builder.ClearProviders();
-                   builder.AddSerilog(Log.Logger);
-               })
+                {
+                    builder.ClearProviders();
+                    builder.AddSerilog(Log.Logger);
+                })
                .UseDefaultServiceProvider((context, options) =>
-               {
-                   bool isDevelopment = context.HostingEnvironment.IsDevelopment();
-                   options.ValidateScopes = isDevelopment;
-                   options.ValidateOnBuild = isDevelopment;
-               })
-               .ConfigureServices((hostContext, services) =>
-               {
-                   services.AddOptions();
-                   services.AddHttpClient<IPinterestAgent, PinterestAgent>();
-                   services.AddHostedService<Worker>();
-               });
+                {
+                    bool isDevelopment = context.HostingEnvironment.IsDevelopment();
+                    options.ValidateScopes = isDevelopment;
+                    options.ValidateOnBuild = isDevelopment;
+                })
+               .ConfigureServices((_, services) =>
+                {
+                    services.AddOptions();
+                    services.AddHttpClient<IPinterestAgent, PinterestAgent>();
+                    services.AddHostedService<Worker>();
+                });
     }
 }
